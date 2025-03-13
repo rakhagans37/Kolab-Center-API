@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -22,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profilePhoto'
     ];
 
     /**
@@ -50,5 +52,14 @@ class User extends Authenticatable
     public function attendance()
     {
         return $this->hasMany(Attendance::class);
+    }
+
+    public static $snakeAttributes = false;
+
+    public function getProfilePhotoAttribute($value)
+    {
+        return $value
+            ? Storage::disk('public')->url($value)
+            : asset('images/default-profile.png');
     }
 }
