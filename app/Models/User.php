@@ -54,6 +54,10 @@ class User extends Authenticatable
         return $this->hasMany(Attendance::class);
     }
 
+    public function seiton(){
+        return $this->hasMany(Seiton::class);
+    }
+
     public static $snakeAttributes = false;
 
     public function getProfilePhotoAttribute($value)
